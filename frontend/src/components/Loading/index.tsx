@@ -2,11 +2,11 @@ import React, { FC } from 'react'
 import { Card, CardBody } from 'reactstrap'
 import CenterPiece from '../CenterPiece'
 
-interface ILoadingProps {
+type TLoadingProps = {
    dotType?: string
 }
 
-export const Loading: FC<ILoadingProps> = (props) => {
+export const Loading: FC<TLoadingProps> = (props) => {
    const { dotType, children } = props
    return (
       <div className='text-center'>
@@ -22,12 +22,12 @@ Loading.defaultProps = {
    dotType: 'dot-bricks',
 }
 
-export interface ILoadingComponentProps {
+export type TLoadingComponentProps = {
    card?: boolean
    dotType?: string
 }
 
-export const LoadingComponent: FC<ILoadingComponentProps> = (props) => {
+export const LoadingComponent: FC<TLoadingComponentProps> = (props) => {
    const { card, dotType, children } = props
 
    if (card) {

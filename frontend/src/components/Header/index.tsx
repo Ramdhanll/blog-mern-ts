@@ -1,15 +1,14 @@
 import React, { FC, FunctionComponent } from 'react'
 import { Col, Container, Row } from 'reactstrap'
 
-interface IHeaderInterface {
+type THeaderProps = {
    height?: string
    image?: string
    title: string
    headline: string
 }
 
-const Header: FC<IHeaderInterface> = (props) => {
-   // const Header: FunctionComponent<IHeaderInterface> = (props) => {
+const Header: FC<THeaderProps> = (props) => {
    const { children, height, image, title, headline } = props
 
    const headerStyle = {

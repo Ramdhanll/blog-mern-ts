@@ -2,15 +2,19 @@
    "name": "backend",
    "version": "1.0.0",
    "description": "",
-   "type": "module",
    "main": "src/index.ts",
    "scripts": {
-      "build": "rm -rf build && tsc"
+      "build": "rm -rf build && tsc",
+      "dev": "npx ts-node-dev src/index.ts"
    },
    "keywords": [],
    "author": "",
    "license": "ISC",
    "dependencies": {
+      "@types/cookie-parser": "^1.4.2",
+      "@types/cors": "^2.8.12",
+      "cookie-parser": "^1.4.6",
+      "cors": "^2.8.5",
       "express": "^4.17.1",
       "firebase-admin": "^9.10.0",
       "mongoose": "^5.13.2"

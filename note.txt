@@ -1,0 +1,4 @@
+
+BACKEND
+1. create server
+2. npm i firebase-admin

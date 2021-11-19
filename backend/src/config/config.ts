@@ -1,6 +1,6 @@
 const config = {
    mongo: {
-      option: {
+      options: {
          useUnifiedTopology: true,
          useNewUrlParser: true,
          socketTimeoutMS: 30000,

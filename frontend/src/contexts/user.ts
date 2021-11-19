@@ -1,22 +1,22 @@
 import React, { createContext } from 'react'
-import { DEFAULT_FIRE_TOKEN, DEFAULT_USER, IUser } from '../interfaces/user'
+import { DEFAULT_FIRE_TOKEN, DEFAULT_USER, TUser } from '../types/user'
 
-export interface IUserState {
-   user: IUser
+export type TUserState = {
+   user: TUser
    fire_token: string
 }
 
-export interface IUserActions {
+export type TUserActions = {
    type: 'login' | 'logout' | 'authenticate'
-   payload: IUserState
+   payload: TUserState
 }
 
-export const initialUserState: IUserState = {
+export const initialUserState: TUserState = {
    user: DEFAULT_USER,
    fire_token: DEFAULT_FIRE_TOKEN,
 }
 
-export const userReducer = (state: IUserState, action: IUserActions) => {
+export const userReducer = (state: TUserState, action: TUserActions) => {
    let { user, fire_token } = action.payload
 
    switch (action.type) {
@@ -31,12 +31,12 @@ export const userReducer = (state: IUserState, action: IUserActions) => {
    }
 }
 
-export interface IUserContextProps {
-   userState: IUserState
-   userDispatch: React.Dispatch<IUserActions>
+export type TUserContextProps = {
+   userState: TUserState
+   userDispatch: React.Dispatch<TUserActions>
 }
 
-const UserContext = createContext<IUserContextProps>({
+const UserContext = createContext<TUserContextProps>({
    userState: initialUserState,
    userDispatch: () => {},
 })

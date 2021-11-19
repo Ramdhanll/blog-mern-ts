@@ -8,9 +8,9 @@ export interface IAuthRouteProps {}
 const AuthRoute: FC<IAuthRouteProps> = (props) => {
    const { children } = props
 
-   const { user } = useContext(UserContext).userState
+   const { userState } = useContext(UserContext)
 
-   if (user._id === '') {
+   if (userState.user._id === '') {
       logging.info('Unauthorized, redirection ....')
       return <Redirect to='/login' />
    } else {

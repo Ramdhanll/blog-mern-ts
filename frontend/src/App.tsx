@@ -2,12 +2,14 @@ import React, { FC, useEffect, useReducer, useState } from 'react'
 import { Route, RouteChildrenProps, Switch } from 'react-router-dom'
 import AuthRoute from './components/AuthRoute'
 import { LoadingComponent } from './components/Loading'
+import logging from './config/logging'
 import routes from './config/routes'
 import {
    initialUserState,
    UserContextProvider,
    userReducer,
 } from './contexts/user'
+import { Validate } from './modules/auth'
 
 export interface IAppProps {}
 
@@ -44,10 +46,22 @@ const App: FC<IAppProps> = (props) => {
          }, 1000)
       } else {
          /** validate with the backend */
-         setAuthStage('Credentials found, validating ...')
-         setTimeout(() => {
-            setLoading(false)
-         }, 1000)
+         return Validate(fire_token, (error, user) => {
+            if (error) {
+               logging.error(error)
+               setAuthStage(`User not valid, logging out ...`)
+               userDispatch({ type: 'logout', payload: initialUserState })
+               setTimeout(() => {
+                  setLoading(false)
+               }, 1000)
+            } else if (user) {
+               setAuthStage(`User authenticated.`)
+               userDispatch({ type: 'login', payload: { user, fire_token } })
+               setTimeout(() => {
+                  setLoading(false)
+               }, 1000)
+            }
+         })
       }
    }
 
@@ -65,16 +79,18 @@ const App: FC<IAppProps> = (props) => {
          <Switch>
             {routes.map((route, i) => {
                if (route.auth) {
-                  ;<Route
-                     key={i}
-                     exact={route.exact}
-                     path={route.path}
-                     render={(routeProps: RouteChildrenProps<any>) => (
-                        <AuthRoute>
-                           <route.component {...routeProps} />
-                        </AuthRoute>
-                     )}
-                  />
+                  return (
+                     <Route
+                        key={i}
+                        exact={route.exact}
+                        path={route.path}
+                        render={(routeProps: RouteChildrenProps<any>) => (
+                           <AuthRoute>
+                              <route.component {...routeProps} />
+                           </AuthRoute>
+                        )}
+                     />
+                  )
                }
                return (
                   <Route

@@ -1,4 +1,4 @@
-export default interface IRoute {
+type TRoute = {
    path: string
    name: string
    exact: boolean
@@ -6,3 +6,5 @@ export default interface IRoute {
    component: any
    props?: any
 }
+
+export default TRoute

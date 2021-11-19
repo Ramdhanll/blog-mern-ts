@@ -1,10 +1,10 @@
-import iRoute from '../interfaces/route'
+import TRoute from '../types/route'
 import BlogPage from '../pages/Blog'
 import EditPage from '../pages/Edit'
 import HomePage from '../pages/Home'
 import LoginPage from '../pages/Login'
 
-const authRoutes: iRoute[] = [
+const authRoutes: TRoute[] = [
    {
       path: '/login',
       exact: true,
@@ -21,7 +21,7 @@ const authRoutes: iRoute[] = [
    },
 ]
 
-const blogRoutes: iRoute[] = [
+const blogRoutes: TRoute[] = [
    {
       path: '/edit',
       exact: true,
@@ -39,22 +39,22 @@ const blogRoutes: iRoute[] = [
    {
       path: '/blogs/:blogID',
       exact: true,
-      auth: true,
+      auth: false,
       component: BlogPage,
       name: 'Blog',
    },
 ]
 
-const mainRoutes: iRoute[] = [
+const mainRoutes: TRoute[] = [
    {
       path: '/',
       exact: true,
-      auth: true,
+      auth: false,
       component: HomePage,
       name: 'Home',
    },
 ]
 
-const routes: iRoute[] = [...authRoutes, ...blogRoutes, ...mainRoutes]
+const routes: TRoute[] = [...authRoutes, ...blogRoutes, ...mainRoutes]
 
 export default routes

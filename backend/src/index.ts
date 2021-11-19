@@ -3,11 +3,24 @@ import logging from './config/logging'
 import config from './config/config'
 import firebaseAdmin from 'firebase-admin'
 import mongoose from 'mongoose'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+
+import userRouter from './api/routes/user'
+import blogRouter from './api/routes/blog'
 
 const app = express()
 
-// Server Handling
-// const httpServer = http.createServer(app)
+// Middleware
+app.use(
+   cors({
+      credentials: true,
+      origin: ['*', 'http://localhost:3000', 'http://localhost'],
+   })
+)
+app.use(cookieParser())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 // Connection to Firebase Admin
 let serviceAccountKey = require('./config/serviceAccountKey.json')
@@ -18,8 +31,10 @@ firebaseAdmin.initializeApp({
 
 // Connect to Mongo
 mongoose
-   .connect(config.mongo.url, config.mongo.option)
-   .then(() => {})
+   .connect(config.mongo.url, config.mongo.options)
+   .then(() => {
+      logging.info('Mongo connected.')
+   })
    .catch((e) => {
       logging.error(e)
    })
@@ -63,6 +78,8 @@ app.use((req, res, next) => {
 })
 
 // Routes
+app.use('/api/users', userRouter)
+app.use('/api/blogs', blogRouter)
 
 // Error Handling
 app.use((req, res, next) => {
