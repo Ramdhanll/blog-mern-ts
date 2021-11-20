@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { FC, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import UserContext from '../contexts/user'
 import IPageInterface from '../types/page'
@@ -14,7 +14,7 @@ import ErrorText from '../components/ErrorText'
 import { Providers } from '../config/firebase'
 import { LoadingComponent } from '../components/Loading'
 
-const LoginPage = (props: IPageInterface) => {
+const LoginPage: FC<IPageInterface> = (props) => {
    const [authenticating, setAuthenticating] = useState<boolean>(false)
    const [error, setError] = useState<string>('')
 

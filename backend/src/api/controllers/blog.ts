@@ -8,12 +8,15 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
    const { author, title, content, headline, picture } = req.body
 
    try {
+      const exist = await Blog.findOne({ title })
+      if (exist) throw { message: 'Title cant duplicated' }
+
       const blog = new Blog({ author, title, content, headline, picture })
 
       const createdBlog = await blog.save()
 
       logging.info(`New blog created ...`)
-      return res.status(200).json({ blog: createdBlog })
+      return res.status(201).json({ blog: createdBlog })
    } catch (error) {
       logging.error(error)
       return res.status(500).json({ error })
@@ -60,7 +63,7 @@ const query = async (req: Request, res: Response, next: NextFunction) => {
 
 const update = async (req: Request, res: Response, next: NextFunction) => {
    const _id = req.params.blogID
-   logging.info(`Incoming update for ${_id} ...`)
+   // logging.info(`Incoming update for ${_id} ...`)
 
    try {
       const blogs = await Blog.findById(_id)
